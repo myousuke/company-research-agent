@@ -126,7 +126,9 @@ The platform implements a WebSocket-based real-time communication system:
 
 ### Quick Setup (Recommended)
 
-The easiest way to get started is using the setup script:
+The easiest way to get started is using the setup script (it will use the
+[`uv`](https://github.com/astral-sh/uv) package manager automatically if
+available):
 
 1. Clone the repository:
 ```bash
@@ -165,12 +167,19 @@ cd tavily-company-research
 
 2. Install backend dependencies:
 ```bash
-# Optional: Create and activate virtual environment
-python -m venv .venv
+# Optional: Install the `uv` package manager for faster installs
+curl -Ls https://astral.sh/uv/install.sh | sh
+
+# Create and activate a virtual environment (using uv)
+uv venv .venv
 source .venv/bin/activate
 
 # Install Python dependencies
-pip install -r requirements.txt
+uv pip install -r requirements.txt
+
+# Alternatively, you can use the standard Python tools:
+# python -m venv .venv
+# pip install -r requirements.txt
 ```
 
 3. Install frontend dependencies:
