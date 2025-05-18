@@ -47,20 +47,39 @@ else
     exit 1
 fi
 
+# Detect uv package manager
+if command -v uv >/dev/null 2>&1; then
+    uv_available=true
+else
+    uv_available=false
+fi
+
 # Ask about virtual environment
 echo -e "\n${BLUE}Would you like to set up a Python virtual environment? (Recommended) [Y/n]${NC}"
 read -r use_venv
 use_venv=${use_venv:-Y}
 
+if [ "$uv_available" = true ]; then
+    echo -e "${BLUE}Using uv for dependency management${NC}"
+fi
+
 if [[ $use_venv =~ ^[Yy]$ ]]; then
     echo -e "\n${BLUE}Setting up Python virtual environment...${NC}"
-    python3 -m venv .venv
+    if [ "$uv_available" = true ]; then
+        uv venv .venv
+    else
+        python3 -m venv .venv
+    fi
     source .venv/bin/activate
     echo -e "${GREEN}✓ Virtual environment created and activated${NC}"
-    
+
     # Install Python dependencies in venv
     echo -e "\n${BLUE}Installing Python dependencies in virtual environment...${NC}"
-    pip install -r requirements.txt
+    if [ "$uv_available" = true ]; then
+        uv pip install -r requirements.txt
+    else
+        pip install -r requirements.txt
+    fi
     echo -e "${GREEN}✓ Python dependencies installed${NC}"
 else
     # Prompt for global installation
@@ -70,12 +89,20 @@ else
 
     if [[ $install_global =~ ^[Yy]$ ]]; then
         echo -e "\n${BLUE}Installing Python dependencies globally...${NC}"
-        pip3 install -r requirements.txt
+        if [ "$uv_available" = true ]; then
+            uv pip install -r requirements.txt
+        else
+            pip3 install -r requirements.txt
+        fi
         echo -e "${GREEN}✓ Python dependencies installed${NC}"
         echo -e "${BLUE}Note: Dependencies have been installed in your global Python environment${NC}"
     else
         echo -e "${BLUE}Skipping Python dependency installation. You'll need to install them manually later.${NC}"
-        echo -e "${BLUE}You can do this by running: pip install -r requirements.txt${NC}"
+        if [ "$uv_available" = true ]; then
+            echo -e "${BLUE}You can do this by running: uv pip install -r requirements.txt${NC}"
+        else
+            echo -e "${BLUE}You can do this by running: pip install -r requirements.txt${NC}"
+        fi
     fi
 fi
 

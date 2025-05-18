@@ -140,7 +140,7 @@ chmod +x setup.sh
 ./setup.sh
 ```
 
-安装脚本将：
+安装脚本将（如果检测到 `uv` 会自动使用）：
 - 检查所需的Python和Node.js版本
 - 可选创建Python虚拟环境（推荐）
 - 安装所有依赖（Python和Node.js）
@@ -165,12 +165,19 @@ cd tavily-company-research
 
 2. 安装后端依赖：
 ```bash
-# 可选：创建并激活虚拟环境
-python -m venv .venv
+# 可选：安装 `uv` 包管理器，加快依赖安装
+curl -Ls https://astral.sh/uv/install.sh | sh
+
+# 创建并激活使用 uv 的虚拟环境
+uv venv .venv
 source .venv/bin/activate
 
-# 安装Python依赖
-pip install -r requirements.txt
+# 安装 Python 依赖
+uv pip install -r requirements.txt
+
+# 也可以使用标准的 Python 工具：
+# python -m venv .venv
+# pip install -r requirements.txt
 ```
 
 3. 安装前端依赖：

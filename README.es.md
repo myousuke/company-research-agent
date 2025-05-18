@@ -139,7 +139,7 @@ chmod +x setup.sh
 ./setup.sh
 ```
 
-El script de instalación hará lo siguiente:
+El script de instalación hará lo siguiente (usará `uv` automáticamente si está instalado):
 - Verificar las versiones requeridas de Python y Node.js
 - Opcionalmente crear un entorno virtual de Python (recomendado)
 - Instalar todas las dependencias (Python y Node.js)
@@ -165,11 +165,18 @@ cd tavily-company-research
 2. Instalar dependencias de backend:
 ```bash
 # Opcional: Crear y activar entorno virtual
-python -m venv .venv
+curl -Ls https://astral.sh/uv/install.sh | sh
+
+# Crear y activar un entorno virtual con uv
+uv venv .venv
 source .venv/bin/activate
 
 # Instalar dependencias de Python
-pip install -r requirements.txt
+uv pip install -r requirements.txt
+
+# Alternativamente, puedes usar las herramientas estándar de Python:
+# python -m venv .venv
+# pip install -r requirements.txt
 ```
 
 3. Instalar dependencias de frontend:
