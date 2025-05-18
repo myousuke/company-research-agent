@@ -239,11 +239,11 @@ docker compose down && docker compose up
 
 1. 启动后端服务器（选择一种方式）：
 ```bash
-# 选项1：直接Python模块
-python -m application.py
+# 选项1：直接Python模块（使用 uv）
+uv run python -m application.py
 
 # 选项2：使用Uvicorn的FastAPI
-uvicorn application:app --reload --port 8000
+uv run uvicorn application:app --reload --port 8000
 ```
 
 2. 在新终端中启动前端：
@@ -260,18 +260,18 @@ npm run dev
 
 1. 启动后端服务器（选择一个选项）：
 
-   **选项1：直接Python模块**
+   **选项1：直接Python模块（使用 uv）**
    ```bash
-   python -m application.py
+   uv run python -m application.py
    ```
 
    **选项2：使用Uvicorn的FastAPI**
    ```bash
    # 如果尚未安装，安装uvicorn
-   pip install uvicorn
+   uv pip install uvicorn
 
    # 使用热重载运行FastAPI应用
-   uvicorn application:app --reload --port 8000
+   uv run uvicorn application:app --reload --port 8000
    ```
 
    后端将在以下位置可用：
@@ -294,7 +294,7 @@ npm run dev
 
 1. 安装EB CLI：
    ```bash
-   pip install awsebcli
+   uv pip install awsebcli
    ```
 
 2. 初始化EB应用：
