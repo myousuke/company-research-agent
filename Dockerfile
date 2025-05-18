@@ -10,11 +10,15 @@ RUN npm run build
 FROM python:3.11-slim AS backend-builder
 WORKDIR /app
 COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+RUN curl -Ls https://astral.sh/uv/install.sh | sh && \
+    uv pip install --no-cache-dir -r requirements.txt
 
 # Stage 3: Final Image
 FROM python:3.11-slim
 WORKDIR /app
+
+# Install uv for package management
+RUN curl -Ls https://astral.sh/uv/install.sh | sh
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
