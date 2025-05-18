@@ -239,11 +239,11 @@ docker compose down && docker compose up
 
 1. Démarrez le serveur backend (choisissez une option) :
 ```bash
-# Option 1 : Module Python Direct
-python -m application.py
+# Option 1 : Module Python Direct (avec uv)
+uv run python -m application.py
 
 # Option 2 : FastAPI avec Uvicorn
-uvicorn application:app --reload --port 8000
+uv run uvicorn application:app --reload --port 8000
 ```
 
 2. Dans un nouveau terminal, démarrez le frontend :
@@ -260,18 +260,18 @@ npm run dev
 
 1. Démarrez le serveur backend (choisissez une option) :
 
-   **Option 1 : Module Python Direct**
+   **Option 1 : Module Python Direct (avec uv)**
    ```bash
-   python -m application.py
+   uv run python -m application.py
    ```
 
    **Option 2 : FastAPI avec Uvicorn**
    ```bash
    # Installez uvicorn si ce n'est pas déjà fait
-   pip install uvicorn
+   uv pip install uvicorn
 
    # Exécutez l'application FastAPI avec rechargement à chaud
-   uvicorn application:app --reload --port 8000
+   uv run uvicorn application:app --reload --port 8000
    ```
 
    Le backend sera disponible sur :
@@ -294,7 +294,7 @@ L'application peut être déployée sur diverses plateformes cloud. Voici quelqu
 
 1. Installez l'EB CLI :
    ```bash
-   pip install awsebcli
+   uv pip install awsebcli
    ```
 
 2. Initialisez l'application EB :
