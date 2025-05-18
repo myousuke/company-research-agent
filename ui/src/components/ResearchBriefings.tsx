@@ -35,7 +35,7 @@ const ResearchBriefings: React.FC<ResearchBriefingsProps> = ({
         onClick={onToggleExpand}
       >
         <h2 className="text-xl font-semibold text-gray-900">
-          調査ブリーフィング
+          Research Briefings
         </h2>
         <button className="text-gray-600 hover:text-gray-900 transition-colors">
           {isExpanded ? (
@@ -72,7 +72,7 @@ const ResearchBriefings: React.FC<ResearchBriefingsProps> = ({
                   briefingStatus[category as keyof BriefingStatus]
                     ? 'text-[#468BFF]'
                     : 'text-gray-700 group-hover:text-gray-900'
-                }`>{({ company: '会社', industry: '業界', financial: '財務', news: 'ニュース' } as Record<string, string>)[category]}</h3>
+                }`}>{category}</h3>
                 {briefingStatus[category as keyof BriefingStatus] ? (
                   <CheckCircle2 className="h-4 w-4 text-[#468BFF] transition-all duration-300" />
                 ) : (
@@ -86,7 +86,7 @@ const ResearchBriefings: React.FC<ResearchBriefingsProps> = ({
 
       {!isExpanded && (
         <div className="mt-2 text-sm text-gray-600">
-          {Object.values(briefingStatus).filter(Boolean).length}/{Object.keys(briefingStatus).length} 件のブリーフィングが完了しました
+          {Object.values(briefingStatus).filter(Boolean).length} of {Object.keys(briefingStatus).length} briefings completed
         </div>
       )}
     </div>

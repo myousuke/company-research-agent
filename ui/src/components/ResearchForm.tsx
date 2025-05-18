@@ -138,7 +138,7 @@ const ResearchForm: React.FC<ResearchFormProps> = ({
                 htmlFor="companyName"
                 className="block text-base font-medium text-gray-700 mb-2.5 transition-all duration-200 group-hover:text-gray-900 font-['DM_Sans']"
               >
-                企業名 <span className="text-gray-900/70">*</span>
+                Company Name <span className="text-gray-900/70">*</span>
               </label>
               <div className="relative">
                 <div className="absolute inset-0 bg-gradient-to-r from-gray-50/0 via-gray-100/50 to-gray-50/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-lg"></div>
@@ -155,7 +155,7 @@ const ResearchForm: React.FC<ResearchFormProps> = ({
                     }))
                   }
                   className={`${glassStyle.input} transition-all duration-300 focus:border-[#468BFF]/50 focus:ring-1 focus:ring-[#468BFF]/50 group-hover:border-[#468BFF]/30 bg-white/80 backdrop-blur-sm text-lg py-4 pl-12 font-['DM_Sans']`}
-                  placeholder="企業名を入力"
+                  placeholder="Enter company name"
                 />
               </div>
             </div>
@@ -166,7 +166,7 @@ const ResearchForm: React.FC<ResearchFormProps> = ({
                 htmlFor="companyUrl"
                 className="block text-base font-medium text-gray-700 mb-2.5 transition-all duration-200 group-hover:text-gray-900 font-['DM_Sans']"
               >
-                企業URL
+                Company URL
               </label>
               <div className="relative">
                 <div className="absolute inset-0 bg-gradient-to-r from-gray-50/0 via-gray-100/50 to-gray-50/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-lg"></div>
@@ -182,7 +182,7 @@ const ResearchForm: React.FC<ResearchFormProps> = ({
                     }))
                   }
                   className={`${glassStyle.input} transition-all duration-300 focus:border-[#468BFF]/50 focus:ring-1 focus:ring-[#468BFF]/50 group-hover:border-[#468BFF]/30 bg-white/80 backdrop-blur-sm text-lg py-4 pl-12 font-['DM_Sans']`}
-                  placeholder="example.co.jp"
+                  placeholder="example.com"
                 />
               </div>
             </div>
@@ -193,7 +193,7 @@ const ResearchForm: React.FC<ResearchFormProps> = ({
                 htmlFor="companyHq"
                 className="block text-base font-medium text-gray-700 mb-2.5 transition-all duration-200 group-hover:text-gray-900 font-['DM_Sans']"
               >
-                本社所在地
+                Company HQ
               </label>
               <LocationInput
                 value={formData.companyHq}
@@ -213,7 +213,7 @@ const ResearchForm: React.FC<ResearchFormProps> = ({
                 htmlFor="companyIndustry"
                 className="block text-base font-medium text-gray-700 mb-2.5 transition-all duration-200 group-hover:text-gray-900 font-['DM_Sans']"
               >
-                業界
+                Company Industry
               </label>
               <div className="relative">
                 <div className="absolute inset-0 bg-gradient-to-r from-gray-50/0 via-gray-100/50 to-gray-50/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-lg"></div>
@@ -229,7 +229,7 @@ const ResearchForm: React.FC<ResearchFormProps> = ({
                     }))
                   }
                   className={`${glassStyle.input} transition-all duration-300 focus:border-[#468BFF]/50 focus:ring-1 focus:ring-[#468BFF]/50 group-hover:border-[#468BFF]/30 bg-white/80 backdrop-blur-sm text-lg py-4 pl-12 font-['DM_Sans']`}
-                  placeholder="例: テクノロジー、ヘルスケア"
+                  placeholder="e.g. Technology, Healthcare"
                 />
               </div>
             </div>
@@ -245,12 +245,12 @@ const ResearchForm: React.FC<ResearchFormProps> = ({
               {isResearching ? (
                 <>
                   <Loader2 className="animate-spin -ml-1 mr-2 h-5 w-5 loader-icon" style={{ stroke: loaderColor }} />
-                  <span className="text-base font-medium text-gray-900/90">調査中...</span>
+                  <span className="text-base font-medium text-gray-900/90">Researching...</span>
                 </>
               ) : (
                 <>
                   <Search className="-ml-1 mr-2 h-5 w-5 text-gray-900/90" />
-                  <span className="text-base font-medium text-gray-900/90">調査開始</span>
+                  <span className="text-base font-medium text-gray-900/90">Start Research</span>
                 </>
               )}
             </div>

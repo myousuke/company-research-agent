@@ -60,7 +60,7 @@ const ResearchReport: React.FC<ResearchReportProps> = ({
               {isGeneratingPdf ? (
                 <>
                   <Loader2 className="animate-spin h-5 w-5 mr-2" style={{ stroke: loaderColor }} />
-                  PDFを生成中...
+                  Generating PDF...
                 </>
               ) : (
                 <>
@@ -175,7 +175,7 @@ const ResearchReport: React.FC<ResearchReportProps> = ({
               ),
             }}
           >
-            {output.details.report || "レポートはありません"}
+            {output.details.report || "No report available"}
           </ReactMarkdown>
         </div>
       </div>
