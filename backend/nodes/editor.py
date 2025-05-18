@@ -217,35 +217,33 @@ class Editor:
         industry = self.context["industry"]
         hq_location = self.context["hq_location"]
         
-        prompt = f"""You are compiling a comprehensive research report about {company}.
-
-Compiled briefings:
+        prompt = f"""{company} に関する包括的な調査レポートを作成してください。以下は各セクションのブリーフィングです:
 {combined_content}
 
-Create a comprehensive and focused report on {company}, a {industry} company headquartered in {hq_location} that:
-1. Integrates information from all sections into a cohesive non-repetitive narrative
-2. Maintains important details from each section
-3. Logically organizes information and removes transitional commentary / explanations
-4. Uses clear section headers and structure
+{company} は日本の {industry} 企業で、本社は {hq_location} にあります。次の点に留意してレポートをまとめてください。
+1. すべてのセクションの情報を統合し、重複を避ける
+2. 各セクションの重要な内容を保持する
+3. 論理的に整理し、不要なつなぎの説明を省く
+4. 明確なセクション見出しと構成を使用する
 
-Formatting rules:
-Strictly enforce this EXACT document structure:
+書式ルール:
+以下のドキュメント構成を厳密に守ってください。
 
-# {company} Research Report
+# {company} 調査レポート
 
-## Company Overview
+## 会社概要
 [Company content with ### subsections]
 
-## Industry Overview
+## 業界概要
 [Industry content with ### subsections]
 
-## Financial Overview
+## 財務概要
 [Financial content with ### subsections]
 
-## News
+## ニュース
 [News content with ### subsections]
 
-Return the report in clean markdown format. No explanations or commentary."""
+レポートはマークダウン形式で返してください。解説やコメントは不要です。"""
         
         try:
             response = await self.openai_client.chat.completions.create(
@@ -253,7 +251,7 @@ Return the report in clean markdown format. No explanations or commentary."""
                 messages=[
                     {
                         "role": "system",
-                        "content": "You are an expert report editor that compiles research briefings into comprehensive company reports."
+                        "content": "あなたはブリーフィングを統合して詳細なレポートを作成する専門編集者です。"
                     },
                     {
                         "role": "user",
@@ -281,17 +279,17 @@ Return the report in clean markdown format. No explanations or commentary."""
         industry = self.context["industry"]
         hq_location = self.context["hq_location"]
         
-        prompt = f"""You are an expert briefing editor. You are given a report on {company}.
+        prompt = f"""あなたはブリーフィング編集の専門家です。以下は {company} に関するレポートです。
 
-Current report:
+現在のレポート:
 {content}
 
-1. Remove redundant or repetitive information
-2. Remove information that is not relevant to {company}, the {industry} company headquartered in {hq_location}.
-3. Remove sections lacking substantial content
-4. Remove any meta-commentary (e.g. "Here is the news...")
+1. 重複した情報を削除する
+2. {hq_location} に本社を置く日本の {industry} 企業 {company} に関係のない情報を除外する
+3. 内容の薄いセクションを削除する
+4. "ここにニュースがあります" のようなメタ的なコメントを除去する
 
-Strictly enforce this EXACT document structure:
+次のドキュメント構成を厳密に守ってください:
 
 ## Company Overview
 [Company content with ### subsections]
@@ -308,26 +306,26 @@ Strictly enforce this EXACT document structure:
 ## References
 [References in MLA format - PRESERVE EXACTLY AS PROVIDED]
 
-Critical rules:
-1. The document MUST start with "# {company} Research Report"
-2. The document MUST ONLY use these exact ## headers in this order:
-   - ## Company Overview
-   - ## Industry Overview
-   - ## Financial Overview
-   - ## News
+重要なルール:
+1. ドキュメントは必ず "# {company} 調査レポート" から始める
+2. 使用できる ## 見出しは以下の順序のみ:
+   - ## 会社概要
+   - ## 業界概要
+   - ## 財務概要
+   - ## ニュース
    - ## References
-3. NO OTHER ## HEADERS ARE ALLOWED
-4. Use ### for subsections in Company/Industry/Financial sections
-5. News section should only use bullet points (*), never headers
-6. Never use code blocks (```)
-7. Never use more than one blank line between sections
-8. Format all bullet points with *
-9. Add one blank line before and after each section/list
-10. DO NOT CHANGE the format of the references section
+3. 他の ## 見出しは使用不可
+4. 会社・業界・財務の各セクションでは ### を使う
+5. ニュースセクションは箇条書き(*)のみで見出しを使わない
+6. コードブロック(```)は使用しない
+7. セクション間の空行は1行まで
+8. すべての箇条書きは * で始める
+9. 各セクション/リストの前後には1行の空行を入れる
+10. References セクションの形式は変更しない
 
-Return the polished report in flawless markdown format. No explanation.
+整形済みのレポートをマークダウン形式で返してください。解説は不要です。
 
-Return the cleaned report in flawless markdown format. No explanations or commentary."""
+最終的なレポートのみを返答し、コメントは不要です。"""
         
         try:
             response = await self.openai_client.chat.completions.create(
@@ -335,7 +333,7 @@ Return the cleaned report in flawless markdown format. No explanations or commen
                 messages=[
                     {
                         "role": "system",
-                        "content": "You are an expert markdown formatter that ensures consistent document structure."
+                        "content": "あなたは文書構造を整える専門的なMarkdownフォーマッターです。"
                     },
                     {
                         "role": "user",

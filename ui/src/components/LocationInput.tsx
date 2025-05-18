@@ -206,7 +206,7 @@ const LocationInput: React.FC<LocationInputProps> = ({ value, onChange, classNam
           }
         }}
         className={`${className} !font-['DM_Sans']`}
-        placeholder="City, Country"
+        placeholder="都市、国"
       />
     </div>
   );

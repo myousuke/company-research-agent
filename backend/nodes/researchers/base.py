@@ -48,7 +48,7 @@ class BaseResearcher:
                 messages=[
                     {
                         "role": "system",
-                        "content": f"You are researching {company}, a company in the {industry} industry."
+                        "content": f"あなたは{industry}業界の日本の企業{company}について調査しています。"
                     },
                     {
                         "role": "user",
@@ -153,11 +153,12 @@ class BaseResearcher:
     def _format_query_prompt(self, prompt, company, hq, year):
         return f"""{prompt}
 
-        Important Guidelines:
-        - Focus ONLY on {company}-specific information
-        - Make queries very brief and to the point
-        - Provide exactly 4 search queries (one per line), with no hyphens or dashes
-        - DO NOT make assumptions about the industry - use only the provided industry information"""
+        この企業は日本の企業です。
+        重要なガイドライン:
+        - {company}に特化した情報のみに集中する
+        - クエリは簡潔にまとめる
+        - 検索クエリは4つだけ(各行1つ)、ハイフンやダッシュは使わない
+        - 業界について推測せず、提供された情報のみを使用する"""
 
     def _fallback_queries(self, company, year):
         return [
@@ -188,7 +189,9 @@ class BaseResearcher:
             search_params = {
                 "search_depth": "basic",
                 "include_raw_content": False,
-                "max_results": 5
+                "max_results": 5,
+                "search_lang": "ja",
+                "search_region": "jp"
             }
             
             if self.analyst_type == "news_analyst":
@@ -285,7 +288,9 @@ class BaseResearcher:
         search_params = {
             "search_depth": "basic",
             "include_raw_content": False,
-            "max_results": 5
+            "max_results": 5,
+            "search_lang": "ja",
+            "search_region": "jp"
         }
         
         if self.analyst_type == "news_analyst":
