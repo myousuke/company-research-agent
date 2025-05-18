@@ -168,8 +168,11 @@ cd tavily-company-research
 python -m venv .venv
 source .venv/bin/activate
 
-# Instalar dependencias de Python
-pip install -r requirements.txt
+# Instalar el gestor de paquetes uv
+curl -Ls https://astral.sh/uv/install.sh | bash
+
+# Instalar dependencias de Python con uv
+uv pip install -r requirements.txt
 ```
 
 3. Instalar dependencias de frontend:
@@ -260,7 +263,7 @@ npm run dev
    **Opción 2: FastAPI con Uvicorn**
    ```bash
    # Instalar uvicorn si aún no está instalado
-   pip install uvicorn
+   uv pip install uvicorn
 
    # Ejecutar la aplicación FastAPI con recarga automática
    uvicorn application:app --reload --port 8000
@@ -286,7 +289,7 @@ La aplicación puede desplegarse en varias plataformas en la nube. Aquí hay alg
 
 1. Instalar el EB CLI:
    ```bash
-   pip install awsebcli
+   uv pip install awsebcli
    ```
 
 2. Inicializar la aplicación EB:

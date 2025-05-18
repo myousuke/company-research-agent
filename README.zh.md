@@ -169,8 +169,11 @@ cd tavily-company-research
 python -m venv .venv
 source .venv/bin/activate
 
-# 安装Python依赖
-pip install -r requirements.txt
+# 安装 uv 包管理器
+curl -Ls https://astral.sh/uv/install.sh | bash
+
+# 使用 uv 安装 Python 依赖
+uv pip install -r requirements.txt
 ```
 
 3. 安装前端依赖：
@@ -261,7 +264,7 @@ npm run dev
    **选项2：使用Uvicorn的FastAPI**
    ```bash
    # 如果尚未安装，安装uvicorn
-   pip install uvicorn
+   uv pip install uvicorn
 
    # 使用热重载运行FastAPI应用
    uvicorn application:app --reload --port 8000
@@ -287,7 +290,7 @@ npm run dev
 
 1. 安装EB CLI：
    ```bash
-   pip install awsebcli
+   uv pip install awsebcli
    ```
 
 2. 初始化EB应用：
