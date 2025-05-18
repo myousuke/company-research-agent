@@ -22,7 +22,7 @@ const ResearchQueries: React.FC<ResearchQueriesProps> = ({
         onClick={onToggleExpand}
       >
         <h2 className="text-xl font-semibold text-gray-900">
-          Generated Research Queries
+          生成された調査クエリ
         </h2>
         <button className="text-gray-600 hover:text-gray-900 transition-colors">
           {isExpanded ? (
@@ -40,7 +40,7 @@ const ResearchQueries: React.FC<ResearchQueriesProps> = ({
           {['company', 'industry', 'financial', 'news'].map((category) => (
             <div key={category} className={`${glassStyle} rounded-xl p-3`}>
               <h3 className="text-base font-medium text-gray-900 mb-3 capitalize">
-                {category.charAt(0).toUpperCase() + category.slice(1)} Queries
+                {({ company: '会社', industry: '業界', financial: '財務', news: 'ニュース' } as Record<string, string>)[category]}クエリ
               </h3>
               <div className="space-y-2">
                 {/* Show streaming queries first */}
@@ -68,7 +68,7 @@ const ResearchQueries: React.FC<ResearchQueriesProps> = ({
       
       {!isExpanded && (
         <div className="mt-2 text-sm text-gray-600">
-          {queries.length} queries generated across {['company', 'industry', 'financial', 'news'].length} categories
+          {queries.length}件のクエリが{['company', 'industry', 'financial', 'news'].length}カテゴリで生成されました
         </div>
       )}
     </div>

@@ -44,10 +44,10 @@ class Briefing:
                 )
 
         prompts = {
-            'company': f"""Create a focused company briefing for {company}, a {industry} company based in {hq_location}.
-Key requirements:
-1. Start with: "{company} is a [what] that [does what] for [whom]"
-2. Structure using these exact headers and bullet points:
+            'company': f"""{company} は日本の {industry} 企業で、本社は {hq_location} にあります。次の形式で企業ブリーフィングを作成してください。
+主な要件:
+1. 最初に「{company} は [何をする企業] で、[誰のためのもの]」と1文で述べる
+2. 以下の見出しと箇条書きを使用する:
 
 ### Core Product/Service
 * List distinct products/features
@@ -70,14 +70,14 @@ Key requirements:
 * Discuss product / service pricing
 * List distribution channels
 
-3. Each bullet must be a single, complete fact
-4. Never mention "no information found" or "no data available"
-5. No paragraphs, only bullet points
-6. Provide only the briefing. No explanations or commentary.""",
+3. 箇条書きは1項目につき1事実とする
+4. "情報が見つからない" などは記載しない
+5. 段落ではなく箇条書きのみを使用
+6. ブリーフィングのみを返答し、解説やコメントは不要""",
 
-            'industry': f"""Create a focused industry briefing for {company}, a {industry} company based in {hq_location}.
-Key requirements:
-1. Structure using these exact headers and bullet points:
+            'industry': f"""{company} は日本の {industry} 企業で、本社は {hq_location} にあります。以下の形式で業界ブリーフィングを作成してください。
+主な要件:
+1. 次の見出しと箇条書きを使用する:
 
 ### Market Overview
 * State {company}'s exact market segment
@@ -96,14 +96,14 @@ Key requirements:
 ### Market Challenges
 • List specific verified challenges
 
-2. Each bullet must be a single, complete news event.
-3. No paragraphs, only bullet points
-4. Never mention "no information found" or "no data available"
-5. Provide only the briefing. No explanation.""",
+2. 箇条書きはそれぞれ完結した事実とする
+3. 段落ではなく箇条書きのみを使用
+4. "情報が見つからない" などは記載しない
+5. ブリーフィングのみを返答する""",
 
-            'financial': f"""Create a focused financial briefing for {company}, a {industry} company based in {hq_location}.
-Key requirements:
-1. Structure using these headers and bullet points:
+            'financial': f"""{company} は日本の {industry} 企業で、本社は {hq_location} にあります。以下の形式で財務ブリーフィングを作成してください。
+主な要件:
+1. 次の見出しと箇条書きを使用する:
 
 ### Funding & Investment
 * Total funding amount with date
@@ -113,16 +113,16 @@ Key requirements:
 ### Revenue Model
 * Discuss product / service pricing if applicable
 
-2. Include specific numbers when possible
-3. No paragraphs, only bullet points
-4. Never mention "no information found" or "no data available"
-5. NEVER repeat the same round of funding multiple times. ALWAYS assume that multiple funding rounds in the same month are the same round.
-6. NEVER include a range of funding amounts. Use your best judgement to determine the exact amount based on the information provided.
-6. Provide only the briefing. No explanation or commentary.""",
+2. 可能であれば具体的な数値を含める
+3. 段落ではなく箇条書きのみを使用
+4. "情報が見つからない" などは記載しない
+5. 同じ月の複数の資金調達は同一ラウンドとみなす
+6. 金額の幅は提示せず、最も適切と思われる額を記載する
+6. ブリーフィングのみを返答し、解説やコメントは不要""",
 
-            'news': f"""Create a focused news briefing for {company}, a {industry} company based in {hq_location}.
-Key requirements:
-1. Structure into these categories using bullet points:
+            'news': f"""{company} は日本の {industry} 企業で、本社は {hq_location} にあります。以下の形式でニュースブリーフィングを作成してください。
+主な要件:
+1. 次のカテゴリに分けて箇条書きを使用する:
 
 ### Major Announcements
 * Product / service launches
@@ -136,11 +136,11 @@ Key requirements:
 * Awards
 * Press coverage
 
-2. Sort newest to oldest
-3. One event per bullet point
-4. Do not mention "no information found" or "no data available"
-5. Never use ### headers, only bullet points
-6. Provide only the briefing. Do not provide explanations or commentary.""",
+2. 新しいものから順に並べる
+3. 1行につき1つの出来事とする
+4. "情報が見つからない" などは記載しない
+5. ### 見出しを使わず箇条書きのみ
+6. ブリーフィングのみを返答し、解説やコメントは不要""",
         }
         
         # Normalize docs to a list of (url, doc) tuples
@@ -169,9 +169,9 @@ Key requirements:
                 break
         
         separator = "\n" + "-" * 40 + "\n"
-        prompt = f"""{prompts.get(category, 'Create a focused, informative and insightful research briefing on the company: {company} in the {industry} industry based on the provided documents.')}
+        prompt = f"""{prompts.get(category, '{company} に関する詳細で有益な日本語のブリーフィングを作成してください。業界は {industry} で、本社は {hq_location} にあります。')}
 
-Analyze the following documents and extract key information. Provide only the briefing, no explanations or commentary:
+以下の文書を分析し、主要な情報を抽出してください。ブリーフィングのみを返答し、解説やコメントは不要です:
 
 {separator}{separator.join(doc_texts)}{separator}
 
