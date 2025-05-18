@@ -24,6 +24,13 @@ const ResearchBriefings: React.FC<ResearchBriefingsProps> = ({
   const glassStyle = "backdrop-filter backdrop-blur-lg bg-white/80 border border-gray-200 shadow-xl";
   const cardGlassStyle = "backdrop-filter backdrop-blur-lg bg-white/80 shadow-sm";
 
+  const categoryLabels: Record<keyof BriefingStatus, string> = {
+    company: '会社',
+    industry: '業界',
+    financial: '財務',
+    news: 'ニュース',
+  };
+
   return (
     <div 
       className={`${glassStyle} rounded-2xl p-6 transition-all duration-300 ease-in-out ${
@@ -72,7 +79,7 @@ const ResearchBriefings: React.FC<ResearchBriefingsProps> = ({
                   briefingStatus[category as keyof BriefingStatus]
                     ? 'text-[#468BFF]'
                     : 'text-gray-700 group-hover:text-gray-900'
-                }`>{({ company: '会社', industry: '業界', financial: '財務', news: 'ニュース' } as Record<string, string>)[category]}</h3>
+                }`>{categoryLabels[category as keyof BriefingStatus]}</h3>
                 {briefingStatus[category as keyof BriefingStatus] ? (
                   <CheckCircle2 className="h-4 w-4 text-[#468BFF] transition-all duration-300" />
                 ) : (
