@@ -37,7 +37,7 @@ const CurationExtraction: React.FC<CurationExtractionProps> = ({
         onClick={onToggleExpand}
       >
         <h2 className="text-xl font-semibold text-gray-900">
-          キュレーションと抽出
+          Curation and Extraction
         </h2>
         <button className="text-gray-600 hover:text-gray-900 transition-colors">
           {isExpanded ? (
@@ -69,9 +69,9 @@ const CurationExtraction: React.FC<CurationExtractionProps> = ({
                   </div>
                   <div className="text-sm text-gray-600">
                     {counts ? (
-                      `${counts.total} 件中から選択`
+                      `selected from ${counts.total}`
                     ) : (
-                      "待機中..."
+                      "waiting..."
                     )}
                   </div>
                 </div>
@@ -83,7 +83,7 @@ const CurationExtraction: React.FC<CurationExtractionProps> = ({
 
       {!isExpanded && enrichmentCounts && (
         <div className="mt-2 text-sm text-gray-600">
-          {Object.values(enrichmentCounts).reduce((acc, curr) => acc + curr.enriched, 0)} 件が {Object.values(enrichmentCounts).reduce((acc, curr) => acc + curr.total, 0)} 件中で抽出されました
+          {Object.values(enrichmentCounts).reduce((acc, curr) => acc + curr.enriched, 0)} documents enriched from {Object.values(enrichmentCounts).reduce((acc, curr) => acc + curr.total, 0)} total
         </div>
       )}
     </div>

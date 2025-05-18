@@ -102,7 +102,7 @@ const ExamplePopup: React.FC<ExamplePopupProps> = ({
     >
       <Sparkles className="h-4 w-4 text-blue-500 group-hover:text-blue-600 animate-pulse group-hover:animate-none group-hover:scale-110 transition-all" />
       <div>
-        <span className="text-sm font-medium text-gray-700 group-hover:text-gray-800 transition-colors">例を試す: </span>
+        <span className="text-sm font-medium text-gray-700 group-hover:text-gray-800 transition-colors">Try an example: </span>
         <span 
           className={`text-sm font-bold text-blue-600 group-hover:text-blue-700 transition-all inline-block
             ${isNameAnimating ? 'opacity-0 transform -translate-y-3 scale-95' : 'opacity-100 transform translate-y-0 scale-100'}`}
