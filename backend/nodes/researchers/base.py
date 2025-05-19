@@ -168,7 +168,7 @@ class BaseResearcher:
             f"{company} industry analysis {year}"
         ]
 
-    async def search_single_query(self, query: str, websocket_manager=None, job_id=None) -> Dict[str, Any]:
+    async def search_single_query(self, query: str, language: str = "en", websocket_manager=None, job_id=None) -> Dict[str, Any]:
         """Execute a single search query with proper error handling."""
         if not query or len(query.split()) < 3:
             return {}
@@ -191,6 +191,9 @@ class BaseResearcher:
                 "include_raw_content": False,
                 "max_results": 5
             }
+
+            if language == "ja":
+                search_params["search_lang"] = "ja"
             
             if self.analyst_type == "news_analyst":
                 search_params["topic"] = "news"
@@ -288,6 +291,10 @@ class BaseResearcher:
             "include_raw_content": False,
             "max_results": 5
         }
+
+        language = state.get("language", "en")
+        if language == "ja":
+            search_params["search_lang"] = "ja"
         
         if self.analyst_type == "news_analyst":
             search_params["topic"] = "news"
