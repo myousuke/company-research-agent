@@ -219,8 +219,6 @@ class Editor:
         industry = self.context["industry"]
         hq_location = self.context["hq_location"]
         language = self.context.get("language", "en")
-        prefix = "この内容は日本語で書き直してください。" if language == "ja" else ""
-        language = self.context.get("language", "en")
         prefix = "レポートは日本語で作成してください。" if language == "ja" else ""
         
         prompt = f"""{prefix}You are compiling a comprehensive research report about {company}.
@@ -286,7 +284,9 @@ Return the report in clean markdown format. No explanations or commentary."""
         company = self.context["company"]
         industry = self.context["industry"]
         hq_location = self.context["hq_location"]
-        
+        language = self.context.get("language", "en")
+        prefix = "レポートは日本語で作成してください。" if language == "ja" else ""
+
         prompt = f"""{prefix}You are an expert briefing editor. You are given a report on {company}.
 
 Current report:
