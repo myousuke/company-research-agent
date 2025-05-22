@@ -9,5 +9,6 @@ pymongo==4.6.3
 reportlab==4.3.1
 tavily_python==0.5.1
 uvicorn[standard]==0.34.0
-websockets==12.0
+websockets
 google-generativeai==0.8.4
+google-genai
