@@ -6,6 +6,8 @@ from reportlab.lib.pagesizes import letter
 from reportlab.lib import colors
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, ListFlowable, ListItem
+from reportlab.pdfbase.ttfonts import TTFont
+from reportlab.pdfbase import pdfmetrics
 from .references import extract_domain_name
 
 
@@ -39,6 +41,14 @@ def generate_pdf_from_md(markdown_content: str, output_pdf) -> None:
         output_pdf: Either a file path string or a BytesIO object
     """
     try:
+        # 日本語フォント（ヒラギノ角ゴシック W3）を登録
+        font_path = '/System/Library/Fonts/ヒラギノ角ゴシック W3.ttc'
+        try:
+            pdfmetrics.registerFont(TTFont('Hiragino', font_path))
+        except Exception as e:
+            # 既に登録済みの場合やエラー時は無視
+            pass
+            
         # If output_pdf is a string (file path), ensure directory exists
         if isinstance(output_pdf, str):
             os.makedirs(os.path.dirname(os.path.abspath(output_pdf)), exist_ok=True)
@@ -65,7 +75,8 @@ def generate_pdf_from_md(markdown_content: str, output_pdf) -> None:
             parent=styles['Heading1'],
             fontSize=20,
             textColor=colors.black,
-            spaceAfter=12
+            spaceAfter=12,
+            fontName='Hiragino'  # 日本語フォント指定
         )
         
         heading2_style = ParagraphStyle(
@@ -75,7 +86,7 @@ def generate_pdf_from_md(markdown_content: str, output_pdf) -> None:
             textColor=colors.black,
             spaceBefore=12,
             spaceAfter=6,
-            fontName='Helvetica-Bold'
+            fontName='Hiragino'  # 日本語フォント指定
         )
         
         heading3_style = ParagraphStyle(
@@ -84,7 +95,8 @@ def generate_pdf_from_md(markdown_content: str, output_pdf) -> None:
             fontSize=12,
             textColor=colors.black,
             spaceBefore=10,
-            spaceAfter=4
+            spaceAfter=4,
+            fontName='Hiragino'  # 日本語フォント指定
         )
         
         normal_style = ParagraphStyle(
@@ -93,7 +105,8 @@ def generate_pdf_from_md(markdown_content: str, output_pdf) -> None:
             fontSize=10,
             textColor=colors.black,
             spaceBefore=2,
-            spaceAfter=2
+            spaceAfter=2,
+            fontName='Hiragino'  # 日本語フォント指定
         )
         
         list_item_style = ParagraphStyle(
@@ -105,7 +118,8 @@ def generate_pdf_from_md(markdown_content: str, output_pdf) -> None:
             spaceAfter=2,
             leftIndent=10,
             firstLineIndent=0,
-            bulletIndent=0
+            bulletIndent=0,
+            fontName='Hiragino'  # 日本語フォント指定
         )
         
         # Create the story (content)

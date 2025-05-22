@@ -21,6 +21,8 @@ import uuid
 from collections import defaultdict
 from backend.services.mongodb import MongoDBService
 from backend.services.pdf_service import PDFService
+from backend.utils.gemisound import generate_podcast_audio
+import tempfile
 
 # Configure logging
 logger = logging.getLogger()
@@ -71,6 +73,10 @@ class PDFGenerationRequest(BaseModel):
     company_name: str | None = None
 
 class GeneratePDFRequest(BaseModel):
+    report_content: str
+    company_name: str | None = None
+
+class PodcastAudioRequest(BaseModel):
     report_content: str
     company_name: str | None = None
 
@@ -255,6 +261,47 @@ async def generate_pdf(data: GeneratePDFRequest):
             )
         else:
             raise HTTPException(status_code=500, detail=result)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/generate-podcast-audio")
+async def generate_podcast_audio_api(data: PodcastAudioRequest):
+    """
+    レポートをポッドキャスト会話文に変換し、音声ファイルを生成して返却するAPI。
+    """
+    try:
+        # 1. Gemini 2.5 Flashで会話文に変換
+        from google import genai
+        from google.genai import types
+        import os
+        client = genai.Client(api_key=os.environ.get("GEMINI_API_KEY"))
+        model = "gemini-2.5-flash-preview-05-20"
+        prompt = f"""あなたはポッドキャストの台本作家です。以下のレポート内容を2人の会話形式（Speaker 1, Speaker 2）で、親しみやすく自然な日本語のポッドキャスト台本にしてください。\n\nレポート:\n{data.report_content}"""
+        contents = [
+            types.Content(
+                role="user",
+                parts=[types.Part.from_text(text=prompt)],
+            ),
+        ]
+        generate_content_config = types.GenerateContentConfig(
+            response_mime_type="text/plain",
+        )
+        conversation_text = ""
+        for chunk in client.models.generate_content_stream(
+            model=model,
+            contents=contents,
+            config=generate_content_config,
+        ):
+            if hasattr(chunk, "text"):
+                conversation_text += chunk.text
+        if not conversation_text.strip():
+            raise RuntimeError("Geminiによる会話文生成に失敗しました")
+        # 2. 音声ファイル生成
+        with tempfile.NamedTemporaryFile(delete=False, suffix="_podcast_audio") as tmp:
+            audio_file_path = generate_podcast_audio(conversation_text, tmp.name)
+        # 3. ファイル返却
+        from fastapi.responses import FileResponse
+        return FileResponse(audio_file_path, media_type="audio/wav", filename="podcast_audio.wav")
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 

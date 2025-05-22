@@ -2,8 +2,10 @@ import React from 'react';
 import ReactMarkdown from "react-markdown";
 import rehypeRaw from 'rehype-raw';
 import remarkGfm from 'remark-gfm';
-import { Check, Copy, Download, Loader2 } from 'lucide-react';
+import { Check, Copy, Download, Loader2, Volume2 } from 'lucide-react';
 import { GlassStyle, AnimationStyle } from '../types';
+
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
 
 interface ResearchReportProps {
   output: {
@@ -33,6 +35,41 @@ const ResearchReport: React.FC<ResearchReportProps> = ({
   onCopyToClipboard,
   onGeneratePdf
 }) => {
+  const [isGeneratingAudio, setIsGeneratingAudio] = React.useState(false);
+  const [audioUrl, setAudioUrl] = React.useState<string | null>(null);
+  const audioRef = React.useRef<HTMLAudioElement | null>(null);
+
+  const handleGenerateAudio = async () => {
+    if (!output?.details?.report || isGeneratingAudio) return;
+    setIsGeneratingAudio(true);
+    setAudioUrl(null);
+    try {
+      const response = await fetch(`${API_URL}/generate-podcast-audio`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          report_content: output.details.report,
+          company_name: ''
+        })
+      });
+      if (!response.ok) throw new Error('音声生成に失敗しました');
+      const blob = await response.blob();
+      const url = URL.createObjectURL(blob);
+      setAudioUrl(url);
+    } catch (e) {
+      alert('音声生成に失敗しました');
+    } finally {
+      setIsGeneratingAudio(false);
+    }
+  };
+
+  const handlePlayAudio = () => {
+    if (audioRef.current && audioUrl) {
+      audioRef.current.currentTime = 0;
+      audioRef.current.play();
+    }
+  };
+
   if (!output || !output.details) return null;
 
   return (
@@ -69,6 +106,23 @@ const ResearchReport: React.FC<ResearchReportProps> = ({
                 </>
               )}
             </button>
+            <button
+              onClick={audioUrl ? handlePlayAudio : handleGenerateAudio}
+              disabled={isGeneratingAudio}
+              className="inline-flex items-center justify-center px-4 py-2 rounded-lg bg-[#4CAF50] text-white hover:bg-[#43a047] transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {isGeneratingAudio ? (
+                <Loader2 className="animate-spin h-5 w-5 mr-2" style={{ stroke: loaderColor }} />
+              ) : (
+                <>
+                  <Volume2 className="h-5 w-5" />
+                  <span className="ml-2">音声再生</span>
+                </>
+              )}
+            </button>
+            {audioUrl && (
+              <audio ref={audioRef} src={audioUrl} hidden />
+            )}
           </>
         )}
       </div>
@@ -183,4 +237,4 @@ const ResearchReport: React.FC<ResearchReportProps> = ({
   );
 };
 
-export default ResearchReport; 
+export default ResearchReport;
